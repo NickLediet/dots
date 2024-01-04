@@ -6,9 +6,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # ALIASES
-export DOTFILES='~/.dotfiles'
+export DOTFILES=~/.dotfiles
 alias ll='ls -lah'
-# Import anti-gen
+alias grf='git reset --hard && git clean -df'
+alias gst='git status'
+alias gc='git commit -m'
+alias gadd='git add'
+alias gpush='git push'
+alias gnuke='git reset --hard && git clean -df'
+alias reload='source ~/.zshrc'
+
 source /usr/share/zsh/share/antigen.zsh
 
 # Load the oh-my-zsh's lib
@@ -38,7 +45,7 @@ fpath=(. $fpath)
 
 # Import nvm
 export NVM_DIR="$HOME/.nvm"                                                                              
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm                                       │www-data@b7aa6d3351aa:/app$ node -v
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm              
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion   
 
 
@@ -47,4 +54,10 @@ autoload -U compinit && compinit
 # Import fzf configs
 source $DOTFILES/zsh/fzf-init.zsh
 
+NPM_PACKAGES="${HOME}/.npm-packages"
 
+export PATH="$PATH:$NPM_PACKAGES/bin"
+
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
